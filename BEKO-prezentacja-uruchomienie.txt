@@ -1,0 +1,28 @@
+BEKO prezentacja 
+
+wifi -> Iphone (w)
+pass -> qwertyuiop
+
+włączyć backend w backend_2 -> gateway 
+	najpierw source venv
+	
+	(venv) user@rpi:~/backend_2/BEKO/gateway $ python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+włączyć backend auth w frontend/backend/:
+	najpierw /./venv/
+	
+	(.venv) user@rpi:~/frontend/BEKO/backend $ python -m uvicorn main:app --host 0.0.0.0 --port 8001
+
+Potem włączyć na kompie:
+w folderze desktop->frontend
+
+	npm run build
+	npm install
+	npm run dev -- --host 0.0.0.0
+
+
+
+W panelu logowania na froncie jest panel do zmiany ip
+adres ip rasberki trzeba zmienić
+operator haslo 0000
+administrator 9999
