@@ -1,0 +1,93 @@
+System reaguje na crc
+W karcie tylko screen odpowiedzi uart - placeholder.
+Zdjęcie uart z crc.
+Kod uart dla ciebie do wglądu:
+
+```bash
+APP: FreeRTOS bootstrap
+SEC: task memory cb=0x2000c79c stack=0x2000c808 size=15360
+BMP280: not mounted, task disabled
+LED task: created
+CRYPTO: AES pre_self_test inst=0x420c0000 state=1(READY) err=0x00000000 alg=0x00                                000040 dtype=0x00000000 width=1 keysize=0x00000000
+CRYPTO: HASH pre_self_test state=1(READY) err=0x00000000 dtype=0x00000020 key_le                                n=1
+CRYPTO: hardware backend ready
+BUTTON: task ready b1=1 b2=1 b3=1
+LED task: running rainbow
+ToF task: init OK
+SEC: TPM ready DIDVID=0x0003104A RID=0x01 self_test_tpm_rc=0x0000090A
+SEC: stack after_tpm high-water=3676 words (14704 B)
+SEC: TPM NV read idx=0x01C10101 rc=0(OK) tpm_rc=0x00000000 len=8 nonzero=1
+SEC: root seed loaded from TPM
+SEC: MEM secret key derived from TPM root seed
+SEC: MEM store ready log_slots=0 secret_slots=3
+SEC: MEM log disabled, storage reserved for trusted devices
+SEC: gateway counters rx=84 tx=1218
+SEC: trusted slots persisted=2 loaded=0
+SEC: stack after_store high-water=3528 words (14112 B)
+SEC: task ready
+LCD: init OK addr=0x27
+MENU: task ready
+RADIO CFG [radio init]: sel=0 backend=0 lib=0 state=2 init=1
+RADIO CFG [radio init] LORA: freq=868500000Hz bw=9 sf=7 cr=4/5 pre=8 sync=34 crc                                =1 iq=0 hdr=0
+RADIO HW [radio init]: opmode=0x85 mode=5 mod=0x00 frf=0xD92000 -> 868500000Hz r                                x_bw=0x00
+RADIO: init OK laviet_node=0x4431
+RADIO EVT: CRC_ERR
+
+```
+
+Replay atak na broadcast.
+
+W karcie tylko screen odpowiedzi uart - placeholder.
+Zdjęcie biurka z monitorami - widac nadawanie replay atak - na wyswietlaczu pager widac 'qwerty'.
+Zrzut ekranu z panelu operatora -widać obce wiadomości qwerty.
+Ciągłymi wiadomościami broadcast udało sie zapchać system - zdjęcie uart i logów panelu operatora.
+
+Kod uart dla ciebie do wglądu:
+
+```bash
+RADIO RX len=51 RSSI=-77 SNR=3
+RADIO RX RAW: ....w..i...V.qwerty..).H.....s...B....?._V./P.l.u.u
+RADIO RX HEX: 11 02 00 01 77 CD 00 69 00 00 00 56 06 71 77 65 72 74 79 DA F1 29 EC 48 E3 FB EF BE F6 73 A7 89 C2 42 F6 D6 B8 F3 3F 0D 5F 56 D2 2F 50 CC 6C A8 75 DB 75
+RADIO RX HMAC no-key mode=PAIR32 src=0x0001 dst=0x77CD peer=0x0001 slot0=<empty>
+RADIO RX GATEWAY version=1 ver_type=0x11 type=DATA flags=0x02 src=0x0001 dst=0x77CD msg=0x0069 counter=86 payload_len=6 rssi=-77 snr=3
+RADIO RX GATEWAY FLAGS enc=0 ack_req=1 is_ack=0 pairing=0 cfg=0 bcast=0 ctr_override=0 key_update=0
+RADIO RX GATEWAY MAC: DA F1 29 EC 48 E3 FB EF BE F6 73 A7 89 C2 42 F6 D6 B8 F3 3F 0D 5F 56 D2 2F 50 CC 6C A8 75 DB 75
+RADIO RX GATEWAY PAYLOAD RAW HEX: 71 77 65 72 74 79
+RADIO RX GATEWAY PAYLOAD RAW TXT: "qwerty"
+RADIO RX GATEWAY PAYLOAD DEC HEX: 71 77 65 72 74 79
+RADIO RX GATEWAY PAYLOAD DEC TXT: "qwerty"
+RADIO RX GATEWAY NOTE HMAC failed; PAYLOAD DEC fields below are still raw ciphertext
+RADIO RX HMAC drop src=0x0001 dst=0x77CD msg=0x0069
+RADIO RX len=51 RSSI=-75 SNR=3
+RADIO RX RAW: ....w..i...V.qwerty..).H.....s...B....?._V./P.l.u.u
+RADIO RX HEX: 11 02 00 01 77 CD 00 69 00 00 00 56 06 71 77 65 72 74 79 DA F1 29 EC 48 E3 FB EF BE F6 73 A7 89 C2 42 F6 D6 B8 F3 3F 0D 5F 56 D2 2F 50 CC 6C A8 75 DB 75
+RADIO RX HMAC no-key mode=PAIR32 src=0x0001 dst=0x77CD peer=0x0001 slot0=<empty>
+RADIO RX GATEWAY version=1 ver_type=0x11 type=DATA flags=0x02 src=0x0001 dst=0x77CD msg=0x0069 counter=86 payload_len=6 rssi=-75 snr=3
+```
+
+```bash
+RADIO RX len=51 RSSI=-78 SNR=3
+RADIO RX RAW: ....w..(...[.qwerty>\.R.._.5..f"...%..okn..Qp.\.^9g
+RADIO RX HEX: 11 02 00 01 77 CD 01 28 00 00 00 5B 06 71 77 65 72 74 79 3E 5C 81 52 CD E2 5F 16 35 80 CD 6 B1 DE 25 87 82 6F 6B 6E EB DE 51 70 DF 5C D5 5E 39 67
+RADIO RX HMAC no-key mode=PAIR32 src=0x0001 dst=0x77CD peer=0x0001 slot0=<empty>
+RADIO RX GATEWAY version=1 ver_type=0x11 type=DATA flags=0x02 src=0x0001 dst=0x77CD msg=0x0128 counter=91d_len=6 rssi=-78 snr=3
+RADIO RX GATEWAY FLAGS enc=0 ack_req=1 is_ack=0 pairing=0 cfg=0 bcast=0 ctr_override=0 key_update=0
+RADIO RX GATEWAY MAC: 3E 5C 81 52 CD E2 5F 16 35 80 CD 66 22 02 B1 DE 25 87 82 6F 6B 6E EB DE 51 70 DF 5C39 67
+RADIO RX GATEWAY PAYLOAD RAW HEX: 71 77 65 72 74 79
+RADIO RX GATEWAY PAYLOAD RAW TXT: "qwerty"
+RADIO RX GATEWAY PAYLOAD DEC HEX: 71 77 65 72 74 79
+RADIO RX GATEWAY PAYLOAD DEC TXT: "qwerty"
+RADIO RX GATEWAY NOTE HMAC failed; PAYLOAD DEC fields below are still raw ciphertext
+RADIO RX HMAC drop src=0x0001 dst=0x77CD msg=0x0128
+RADIO RX len=51 RSSI=-79 SNR=3
+RADIO RX RAW: ....w..(...[.qwerty>\.R.._.5..f"...%..okn..Qp.\.^9g
+RADIO RX HEX: 11 02 00 01 77 CD 01 28 00 00 00 5B 06 71 77 65 72 74 79 3E 5C 81 52 CD E2 5F 16 35 80 CD 6 B1 DE 25 87 82 6F 6B 6E EB DE 51 70 DF 5C D5 5E 39 67
+RADIO RX HMAC no-key mode=PAIR32 src=0x0001 dst=0x77CD peer=0x0001 slot0=<empty>
+RADIO RX GATEWAY version=1 ver_type=0x11 type=DATA flags=0x02 src=0x0001 dst=0x77CD msg=0x0128 counter=91d_len=6 rssi=-79 snr=3
+RADIO RX GATEWAY FLAGS enc=0 ack_req=1 is_ack=0 pairing=0 cfg=0 bcast=0 ctr_override=0 key_update=0
+RADIO RX GATEWAY MAC: 3E 5C 81 52 CD E2 5F 16 35 80 CD 66 22 02 B1 DE 25 87 82 6F 6B 6E EB DE 51 70 DF 5C39 67
+RADIO RX GATEWAY PAYLOAD RAW HEX: 71 77 65 72 74 79
+RADIO RX GATEWAY PAYLOAD RAW TXT: "qwerty"
+
+
+```
